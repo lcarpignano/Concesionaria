@@ -8,9 +8,9 @@ let concesionaria = {
     return elegido != 0 ? elegido[0] : null;
   },
   venderAuto: function venderAuto(dominio) {
-    let elegido = this.buscarAuto(dominio);
-    elegido.vendido = true;
-    return elegido;
+    let auto = this.buscarAuto(dominio);
+    auto.vendido = true;
+    return auto;
   },
   autosParaLaVenta: function autosParaLaVenta() {
     return this.autos.filter((auto) => auto.vendido == false);
@@ -39,7 +39,7 @@ let concesionaria = {
   },
 };
 
-console.log(concesionaria.totalDeVentas());
+console.log(concesionaria.venderAuto("APL123"));
 
 /*   autosQuePuedeComprar: function autosQuePuedeComprar(persona) {
     let listaAutos = autos.filter(function (auto) {
@@ -73,5 +73,13 @@ totalDeVentas: function totalDeVentas() {
     );
   }
   return sumaVentas;
+},
+ */
+
+/* 
+venderAuto: function venderAuto(dominio) {
+  let elegido = this.buscarAuto(dominio);
+  elegido.vendido = true;
+  return elegido;
 },
  */
