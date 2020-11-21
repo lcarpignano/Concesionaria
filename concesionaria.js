@@ -4,10 +4,7 @@ const autos = require("./autos");
 let concesionaria = {
   autos: autos,
   buscarAuto: function buscarAuto(dominio) {
-    let elegido = [];
-    this.autos.forEach(function (auto) {
-      if (auto.patente == dominio) elegido.push(auto);
-    });
+    let elegido = this.autos.filter((auto) => auto.patente == dominio);
     return elegido != 0 ? elegido[0] : null;
   },
   venderAuto: function venderAuto(dominio) {
@@ -22,20 +19,12 @@ let concesionaria = {
     return this.autosParaLaVenta().filter((auto) => auto.km < 100);
   },
   listaDeVentas: function listaDeVentas() {
-    let precios = [];
-    this.autos.forEach(function (auto) {
-      if (auto.vendido == true) precios.push(auto.precio);
-    });
-    return precios;
+    return this.autos
+      .filter((auto) => auto.vendido == true)
+      .map((auto) => auto.precio);
   },
   totalDeVentas: function totalDeVentas() {
-    let sumaVentas = 0;
-    if (this.listaDeVentas().length > 0) {
-      sumaVentas = this.listaDeVentas().reduce(
-        (acumulador, valorActual) => acumulador + valorActual
-      );
-    }
-    return sumaVentas;
+    return this.listaDeVentas().reduce((saldo, importe) => saldo + importe);
   },
   puedeComprar: function puedeComprar(auto, persona) {
     //   console.log('== puedeComprar: ', [auto, persona]);
@@ -50,7 +39,7 @@ let concesionaria = {
   },
 };
 
-console.log(concesionaria.autosQuePuedeComprar(personas[0]));
+console.log(concesionaria.totalDeVentas());
 
 /*   autosQuePuedeComprar: function autosQuePuedeComprar(persona) {
     let listaAutos = autos.filter(function (auto) {
@@ -59,3 +48,30 @@ console.log(concesionaria.autosQuePuedeComprar(personas[0]));
     return listaAutos;
   },
 */
+
+// this.autos.forEach(function (auto) {
+//   if (auto.patente == dominio) elegido.push(auto);
+// });
+// return elegido != 0 ? elegido[0] : null;
+
+/* 
+listaDeVentas: function listaDeVentas() {
+  let precios = [];
+  this.autos.forEach(function (auto) {
+    if (auto.vendido == true) precios.push(auto.precio);
+  });
+  return precios;
+},
+ */
+
+/* 
+totalDeVentas: function totalDeVentas() {
+  let sumaVentas = 0;
+  if (this.listaDeVentas().length > 0) {
+    sumaVentas = this.listaDeVentas().reduce(
+      (acumulador, valorActual) => acumulador + valorActual
+    );
+  }
+  return sumaVentas;
+},
+ */
