@@ -3,43 +3,42 @@ const autos = require("./autos");
 
 let concesionaria = {
   autos: autos,
-  buscarAuto: function buscarAuto(dominio) {
+  buscarAuto(dominio) {
     let elegido = this.autos.filter((auto) => auto.patente == dominio);
     return elegido != 0 ? elegido[0] : null;
   },
-  venderAuto: function venderAuto(dominio) {
+  venderAuto(dominio) {
     let auto = this.buscarAuto(dominio);
     auto.vendido = true;
     return auto;
   },
-  autosParaLaVenta: function autosParaLaVenta() {
+  autosParaLaVenta() {
     return this.autos.filter((auto) => auto.vendido == false);
   },
-  autos0KM: function autos0KM() {
+  autos0KM() {
     return this.autosParaLaVenta().filter((auto) => auto.km < 100);
   },
-  listaDeVentas: function listaDeVentas() {
+  listaDeVentas() {
     return this.autos
       .filter((auto) => auto.vendido == true)
       .map((auto) => auto.precio);
   },
-  totalDeVentas: function totalDeVentas() {
+  totalDeVentas() {
     return this.listaDeVentas().reduce((saldo, importe) => saldo + importe);
   },
-  puedeComprar: function puedeComprar(auto, persona) {
+  puedeComprar(auto, persona) {
     //   console.log('== puedeComprar: ', [auto, persona]);
     return (
       auto.precio <= persona.capacidadDePagoTotal &&
       auto.precio / auto.cuotas <= persona.capacidadDePagoEnCuotas
     );
   },
-  autosQuePuedeComprar: function autosQuePuedeComprar(persona) {
-    let listaAutos = autos.filter((auto) => this.puedeComprar(auto, persona));
-    return listaAutos;
+  autosQuePuedeComprar(persona) {
+    return autos.filter((auto) => this.puedeComprar(auto, persona));
   },
 };
 
-console.log(concesionaria.venderAuto("APL123"));
+console.log(concesionaria.autosQuePuedeComprar(personas[0]));
 
 /*   autosQuePuedeComprar: function autosQuePuedeComprar(persona) {
     let listaAutos = autos.filter(function (auto) {
